@@ -69,8 +69,52 @@ div {
   margin-bottom: 60px; /* So they don't get covered by the footer */
 }
 
-#login-container
+.login-container
 {
   border: #580808;
   border-radius: 0%;
+}
+
+.image-container 
+{
+    position: absolute;
+    display: flex; /* shrink to image size */
+}
+
+.student-img 
+{
+  width: 100%;       /* or use a specific value like 600px */
+  max-width: 1200px;  /* adjust this to make the image smaller */
+  max-height: 600px;
+  height: auto;
+  display: flexbox;
+  position: absolute;
+}
+
+.overlay-text 
+{
+  position: absolute;
+  top: 110%;
+  left: 15%;
+  transform: translateY(-50%);
+  color: rgb(238, 232, 232);
+  font-size: 2rem;
+  font-weight: bold;
+  text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.5);
+  z-index: 2;
+}
+
+  .tint-overlay {
+    position: absolute;
+    top: 10;
+    left: 10;
+    width: 79%;
+    height: 85%;
+    background-color: rgba(0, 0, 0, 0.4); /* dark tint with 40% opacity */
+    z-index: 1;
+  }
+
+.dark-grey {
+    color: #555555; /* Medium-dark grey */
+    font-weight: 800;
 }
