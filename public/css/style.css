@@ -68,3 +68,9 @@ div {
   text-align: center;
   margin-bottom: 60px; /* So they don't get covered by the footer */
 }
+
+#login-container
+{
+  border: #580808;
+  border-radius: 0%;
+}
