@@ -18,3 +18,5 @@ function addListing() {
   document.getElementById("price").value = '';
   document.getElementById("description").value = '';
 }
+
+
