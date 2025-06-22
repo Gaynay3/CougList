@@ -105,3 +105,35 @@ body {
   background-color: #9d2235;
   border-color: #9d2235;
 }
+<<<<<<< Updated upstream
+=======
+.dash-titles{
+  color: #9d2235;
+  font-weight:bold;
+}
+
+.thumbnail {
+  height: 100px;
+  width: 100px;
+  object-fit:cover;
+  margin-bottom: 10px;
+  cursor: pointer;
+  border-radius: 4px;
+  border: 2px solid transparent;
+}
+.thumbnail.active {
+  border-color: #a30000;
+}
+.main-img {
+  max-width: 100%;
+  height: auto;
+  max-height:500px;
+  min-height: 500px;
+  object-fit: contain;
+  border-radius: 10px;
+  display:block;
+  margin:auto;
+}
+
+
+>>>>>>> Stashed changes
