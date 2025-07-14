@@ -1,12 +1,14 @@
 body {
   background-color: #f8f8f8;
+  font-family: 'Segoe UI', sans-serif;
 }
 
 .coug-crimson {
-  background-color: #981e32;
+  background-color: #9d2235;
   color: white;
   border: none;
 }
+
 .add-listing {
   margin-top: 20px;
 }
@@ -20,17 +22,16 @@ body {
   margin: 0;
 }
 
-.Qoute
-{
+.Qoute {
   padding: 30px 60px;
   color: white;
   font-size: 30px;
-  letter-spacing: 2px;   
+  letter-spacing: 2px;
   word-spacing: 10px;
   font-family: 'Montserrat', sans-serif;
 }
 
-.btn {
+.landing-btn {
   display: inline-block;
   padding: 30px 60px;
   margin: 30px;
@@ -66,13 +67,70 @@ body {
   z-index: 2;
 }
 
-div {
-  text-align: center;
-  margin-bottom: 60px; /* So they don't get covered by the footer */
-}
-
-.login-container
-{
+.login-container {
   border: #580808;
   border-radius: 0%;
+}
+
+.card-img-top {
+  object-fit: cover;
+  height: 200px;
+  width: 100%;
+}
+
+.card-title {
+  font-weight: bold;
+  color: #9d2235;
+}
+
+.card-highlight {
+  border-left: 8px solid #a4161a;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.btn-pill {
+  border-radius: 20px;
+}
+
+.carousel-item img {
+  height: 200px;
+  object-fit: cover;
+}
+
+.btn-danger, btn-outline-danger:hover {
+  background-color: #9d2235;
+  border-color: #9d2235;
+}
+
+/* Merged from stashed changes */
+
+.dash-titles {
+  color: #9d2235;
+  font-weight: bold;
+}
+
+.thumbnail {
+  height: 100px;
+  width: 100px;
+  object-fit: cover;
+  margin-bottom: 10px;
+  cursor: pointer;
+  border-radius: 4px;
+  border: 2px solid transparent;
+}
+
+.thumbnail.active {
+  border-color: #a30000;
+}
+
+.main-img {
+  max-width: 100%;
+  height: auto;
+  max-height: 500px;
+  min-height: 500px;
+  object-fit: contain;
+  border-radius: 10px;
+  display: block;
+  margin: auto;
 }
