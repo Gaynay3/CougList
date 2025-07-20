@@ -11,7 +11,8 @@
     <h1 class="m-0"><a href="/" style="text-decoration: none; color: inherit;">CougList</a></h1>
     <nav>
       <a href="/" class="mx-3 fw-bold text-white">Home</a>
-      <a href="/about-us" class="mx-3 fw-bold text-white">About</a>
+    <a href="/browse" class="mx-3 fw-bold text-white">Browse</a>
+    <a href="about-us.html" class="mx-3 fw-bold text-white">About</a>
     </nav>
   </header>
 
@@ -25,15 +26,22 @@
           <% if (conversations.length === 0) { %>
             <p>No messages yet.</p>
           <% } else { %>
-            <% conversations.forEach(conv => { 
-              const otherUser = (conv.user1Id === 1) ? conv.user2 : conv.user1;
-              const msg = conv.Messages[0];
+            <% conversations.forEach(conv => {
+                const msg = conv.Messages[0];
             %>
-              <div class="message-preview <%= msg ? '' : 'unread' %> mb-2">
-                <strong><%= otherUser.username %></strong><br>
-                <small>Item: <%= conv.Listing.title %></small><br>
-                <span><%= msg ? msg.content : 'No messages yet' %></span>
-              </div>
+              <% if (conv.otherUser) { %>
+                <div class="message-preview <%= msg ? '' : 'unread' %> mb-2">
+                  <strong><%= conv.otherUser.username %></strong><br>
+                  <small>Item: <%= conv.Listing.title %></small><br>
+                  <span><%= msg ? msg.content : 'No messages yet' %></span>
+                </div>
+              <% } else { %>
+                <div class="message-preview text-muted mb-2">
+                  <strong>Unknown User</strong><br>
+                  <small>Item: <%= conv.Listing.title %></small><br>
+                  <span><%= msg ? msg.content : 'No messages yet' %></span>
+                </div>
+              <% } %>
             <% }); %>
           <% } %>
 

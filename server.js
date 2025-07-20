@@ -62,11 +62,6 @@ app.get('/browse', (req, res) => {
   res.render('browse', { user: req.session.userId });
 });
 
-app.get('/dashboard', requireLogin, (req, res) => {
-  // You can either render an EJS dashboard or serve static HTML
-  res.sendFile(path.join(__dirname, 'public', 'dashboard.html'));
-});
-
 // 404 handler
 app.use((req, res, next) => {
   next(createError(404));

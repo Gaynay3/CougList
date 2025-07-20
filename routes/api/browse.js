@@ -1,32 +1,34 @@
 const express = require('express');
 const router = express.Router();
-const {Listing} = require('../../models');
+const { Listing } = require('../../models');
 const { Op } = require('sequelize');
 
-
 router.get('/', async (req, res) => {
-  console.log('QUERY:', req.query); 
+  try {
+    const { q, category } = req.query;
+    const user = req.session.userId || null;
 
-  const { q, category } = req.query;
-  let listings = await Listing.findAll();
+    const whereClause = {};
 
-  if (q) {
-    const lower = q.toLowerCase();
-    listings = listings.filter(l =>
-      l.title.toLowerCase().includes(lower) ||
-      l.description.toLowerCase().includes(lower)
-    );
+    if (q) {
+      const search = `%${q}%`;
+      whereClause[Op.or] = [
+        { title: { [Op.like]: search } },
+        { description: { [Op.like]: search } }
+      ];
+    }
+
+    if (category && category !== 'All') {
+      whereClause.category = category;
+    }
+
+    const listings = await Listing.findAll({ where: whereClause });
+
+    res.render('browse', { listings, query: q, category, user });
+  } catch (error) {
+    console.error('Browse route error:', error);
+    res.status(500).send('Error loading listings');
   }
-
-  if (category && category !== 'All') {
-    listings = listings.filter(l =>
-      l.category && l.category.toLowerCase() === category.toLowerCase()
-    );
-  }
-
-  res.render('browse', { listings, query: q, category });
-  console.log('FILTERED LISTINGS COUNT:', listings.length);
-
 });
 
 module.exports = router;

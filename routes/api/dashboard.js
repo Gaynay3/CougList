@@ -1,19 +1,21 @@
-const express = require('express');
+const express = require('express'); 
 const router = express.Router();
 const { Conversation, Message, Listing, User } = require('../../models');
-
-const mockCurrentUser = {
-  id: 1,
-  username: 'Andrea Luquin'
-};
+const { Op } = require('sequelize');
 
 router.get('/', async (req, res) => {
   try {
+    const userId = req.session.userId;
+
+    if (!userId) {
+      return res.redirect('/login'); // or handle unauthenticated access
+    }
+
     const conversations = await Conversation.findAll({
       where: {
-        [require('sequelize').Op.or]: [
-          { user1Id: mockCurrentUser.id },
-          { user2Id: mockCurrentUser.id }
+        [Op.or]: [
+          { user1Id: userId },
+          { user2Id: userId }
         ]
       },
       include: [
@@ -31,9 +33,21 @@ router.get('/', async (req, res) => {
       limit: 3 
     });
 
-    res.render('dashboard', { conversations });
+    const enhancedConversations = conversations.map(conv => {
+      const convJson = conv.toJSON();
+      const otherUser = (convJson.user1Id === userId)
+        ? convJson.user2
+        : convJson.user1;
+
+      return {
+        ...convJson,
+        otherUser
+      };
+    });
+
+    res.render('dashboard', { conversations: enhancedConversations });
   } catch (error) {
-    console.error(error);
+    console.error('Dashboard error:', error);
     res.status(500).send('Dashboard error');
   }
 });
