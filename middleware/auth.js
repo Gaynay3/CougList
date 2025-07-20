@@ -1,8 +1,7 @@
 module.exports = function requireLogin(req, res, next) {
-  if (!req.session.userId) {
-    // User not logged in, redirect to login page
-    return res.redirect('/login.html');
+  if (req.session && req.session.userId) {
+    next();
+  } else {
+    res.redirect('/login.html');  // redirect if not logged in
   }
-  // User is logged in, proceed to requested page
-  next();
 };
