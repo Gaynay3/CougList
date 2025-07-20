@@ -6,10 +6,7 @@ const cookieParser = require('cookie-parser');
 const createError = require('http-errors');
 const { Op } = require('sequelize');
 
-
-
 const app = express();
-
 const sequelize = require('./db');
 const { Message, Conversation, Listing } = require('./models'); 
 
@@ -36,8 +33,9 @@ const conversationsRouter = require('./routes/api/conversations');
 const apiMessagesRouter = require('./routes/api/messages');
 const inboxRouter = require('./routes/api/inbox');
 const browseRouter = require('./routes/api/browse');
-const listingRoutes = require('./routes/api/listings-details');
-
+const listingRoutes = require('./routes/api/listing-details');
+const listingsDetailRouter= require('./routes/api/listing-details');
+const dashboardRouter = require('./routes/api/dashboard');
 
 
 
@@ -46,6 +44,9 @@ app.use('/api/messages', apiMessagesRouter);
 app.use('/inbox', inboxRouter);
 app.use('/browse', browseRouter);
 app.use('/listing', listingRoutes);
+app.use('/listing-details', listingsDetailRouter);
+app.use('/dashboard', dashboardRouter);
+
 
 app.use(function (req, res, next) {
   next(createError(404));
@@ -53,7 +54,7 @@ app.use(function (req, res, next) {
 
 app.use((err, req, res, next) => {
   console.error(err); 
-  res.status(err.status || 500).json({ error: err.message || 'Internal Server Error' });
+  res.status(err.status || 500).json({ error: err.message || 'serveri Error' });
 });
 
 

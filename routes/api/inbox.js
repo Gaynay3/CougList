@@ -3,13 +3,13 @@ const router = express.Router();
 const { Conversation, Message, User, Listing} = require('../../models');
 const { Op } = require('sequelize');
 
-// will replace with authorization session logic)
+
 const mockCurrentUser = {
   id: 1,
   username: 'Andrea Luquin'
 };
 
-// GET show all conversations with latest message
+//  show all conversations with latest message
 router.get('/', async (req, res) => {
   try {
     const conversations = await Conversation.findAll({
@@ -106,6 +106,33 @@ router.post('/:id/message', async (req, res) => {
 
 });
 
+
+router.post('/start-conversation', async (req, res) => {
+  const { listingId, sellerId } = req.body;
+
+  try {
+    let conversation = await Conversation.findOne({
+      where: {
+        user1Id: mockCurrentUser.id,
+        user2Id: sellerId,
+        listingId: listingId
+      }
+    });
+
+    if (!conversation) {
+      conversation = await Conversation.create({
+        user1Id: mockCurrentUser.id,
+        user2Id: sellerId,
+        listingId
+      });
+    }
+
+    res.redirect(`/inbox/${conversation.id}`);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Could not start conversation");
+  }
+});
 
 
 module.exports = router;

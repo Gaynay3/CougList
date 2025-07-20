@@ -16,13 +16,34 @@ Listings.init({
     type:DataTypes.FLOAT,
     allowNull: false
   },
+
+  location:{
+    type:DataTypes.STRING,
+    allowNull: false
+  },
   image:{
-    type: DataTypes.STRING,
+    type: DataTypes.JSON,
     allowNull: true
   },
   sellerId:{
     type: DataTypes.INTEGER
-  }
+  },
+  category: {
+  type: DataTypes.STRING,
+  allowNull: true
+},
+delivery: {
+  type: DataTypes.STRING,
+  allowNull: true
+},
+condition: {
+  type: DataTypes.STRING,
+  allowNull: true
+},
+dimensions: {
+  type: DataTypes.STRING,
+  allowNull: true
+}
 },
 {
   sequelize,
