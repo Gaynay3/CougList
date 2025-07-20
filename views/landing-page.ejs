@@ -25,9 +25,15 @@
   <img src="imgs/campus.jpg" alt="WSU Campus" class="hero-img" />
   <div class="hero-buttons">
     <p class="Qoute">WSU's Very Own Market Place</p>
-    <a href="register.html" class="landing-btn">Register</a>
-    <a href="login.html" class="landing-btn">Login</a>
-    <a href="/browse" class="landing-btn">Browse</a>
+    <% if (user) { %>
+        <a href="/browse" class="landing-btn">Browse</a>
+        <a href="/dashboard" class="landing-btn">Dashboard</a>
+        <a href="/logout" class="landing-btn">Logout</a>
+    <% } else { %>
+        <a href="/browse" class="landing-btn">Browse</a>
+        <a href="/register.html" class="landing-btn">Register</a>
+        <a href="/login.html" class="landing-btn">Login</a>
+    <% } %>
   </div>
 </div>
 
