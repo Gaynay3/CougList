@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>CougList - <%= listing.title %></title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"/>
+  <link rel="stylesheet" href="/css/style.css"/>
+</head>
+<body>
+
+<header class="coug-crimson text-white d-flex justify-content-between align-items-center p-4 flex-wrap">
+  <h1 class="m-0">
+    <a href="/" class="text-white text-decoration-none">CougList</a>
+  </h1>
+  <nav>
+    <a href="/" class="mx-3 fw-bold text-white">Home</a>
+    <a href="/dashboard" class="mx-3 fw-bold text-white">Dashboard</a>
+    <a href="/about-us" class="mx-3 fw-bold text-white">About</a>
+  </nav>
+</header>
+
+<div class="container my-5">
+  <div class="row g-5">
+    <div class="col-lg-7 d-flex">
+      <% if (Array.isArray(listing.image)) { %>
+        <div class="me-3 d-flex flex-column align-items-center">
+          <% listing.image.forEach((img, index) => { %>
+            <img src="/imgs/<%= img %>" class="thumbnail <% if (index === 0) { %>active<% } %>" onclick="changeImage(this)">
+          <% }) %>
+        </div>
+        <div class="flex-grow-1">
+          <img id="mainImage" src="/imgs/<%= listing.image[0] %>" class="main-img w-100" alt="<%= listing.title %>">
+        </div>
+      <% } else { %>
+        <img src="/imgs/default.jpg" class="main-img w-100" alt="No image available">
+      <% } %>
+    </div>
+
+    <div class="col-lg-5">
+      <h2 class="dash-titles"><%= listing.title %></h2>
+      <p><strong>Price:</strong> $<%= listing.price %></p>
+      <p><strong>Location:</strong> <%= listing.location %></p>
+      <p><strong>Delivery Details:</strong> <%= listing.delivery%></p>
+      <p><strong>Condition:</strong> <%= listing.condition%></p>
+      <p><strong>Description:</strong> <%= listing.description %></p>
+      <p><strong>Dimensions:</strong> <%= listing.dimensions%></p>
+
+      <form action="/inbox/start-conversation" method="POST">
+        <input type="hidden" name="listingId" value="<%= listing.id %>">
+        <input type="hidden" name="sellerId" value="<%= listing.sellerId%>">
+        <button type="submit" class="btn btn-danger btn-lg w-100 mt-4">Contact Seller</button>
+      </form>
+    </div>
+  </div>
+</div>
+
+<script src="/script/script.js"></script>
+</body>
+
+<footer class="coug-crimson text-white text-center p-3 fixed-bottom">
+  &copy; 2025 CougList - Washington State University
+</footer>
+</html>

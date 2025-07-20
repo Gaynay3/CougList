@@ -8,244 +8,98 @@
   <link rel="stylesheet" href="css/style.css"/>
 </head>
 <body>
-  <header class="coug-crimson text-white p-4 justify-content-between align-items-center p-4 flex-wrap">
-    <div class="container-fluid">
+
+  <header class="coug-crimson text-white p-4">
+    <form action="/browse" method="GET" class="container-fluid">
       <div class="row align-items-center g-3">
         <div class="col-12 col-md-3 text-center text-md-start">
           <h1 class="m-0">
-            <a href="landing-page.html" class="text-white text-decoration-none">CougList</a>
+            <a href="/landing-page.html" class="text-white text-decoration-none">CougList</a>
           </h1>
         </div>
+
+        <!-- Search Input -->
         <div class="col-12 col-md-6">
-          <input type="text" class="form-control rounded-pill px-4" placeholder="Search for items">
+          <input 
+            type="text"
+            name="q"
+            class="form-control rounded-pill px-4"
+            placeholder="Search for items"
+            value="<%= query || '' %>">
         </div>
+
         <div class="col-12 col-md-3 text-center text-md-end">
-            <nav>
-                <a href="/" class="mx-2 fw-bold text-white">Home</a>
-                <% if (user) { %>
-                    <a href="/dashboard" class="mx-2 fw-bold text-white">Dashboard</a>
-                    <a href="/logout" class="mx-2 fw-bold text-white">Logout</a>
-                <% } else { %>
-                    <a href="/login.html" class="mx-2 fw-bold text-white">Login</a>
-                    <a href="/register.html" class="mx-2 fw-bold text-white">Register</a>
-                <% } %>
-                <a href="/about-us.html" class="mx-2 fw-bold text-white">About</a>
-            </nav>
+          <nav>
+            <a href="/landing-page.html" class="mx-2 fw-bold text-white">Home</a>
+            <a href="/dashboard" class="mx-2 fw-bold text-white">Dashboard</a>
+            <a href="/about-us.html" class="mx-2 fw-bold text-white">About</a>
+          </nav>
         </div>
       </div>
-    </div>
+    </form>
   </header>
 
-  <!-- Categories -->
-  <section class="container my-4">
-    <p class="fw-bold">Categories:</p>
+  <!-- filtering section-->
+  <form class="container my-4" method="GET" action="/browse">
+    <p class="fw-bold">Categories: </p>
     <div class="btn-group flex-wrap">
-      <button class="btn btn-outline-danger px-4 py-2 fs-5 me-1 mb-1">All</button>
-      <button class="btn btn-outline-danger px-4 py-2 fs-5 me-1 mb-1">Furniture</button>
-      <button class="btn btn-outline-danger px-4 py-2 fs-5 me-1 mb-1">Books</button>
-      <button class="btn btn-outline-danger px-4 py-2 fs-5 me-1 mb-1">Electronics</button>
-      <button class="btn btn-outline-danger px-4 py-2 fs-5 me-1 mb-1">Kitchen & Dining</button>
-      <button class="btn btn-outline-danger px-4 py-2 fs-5 me-1 mb-1">Sports & Outdoors</button>
+      <% const categories = ['All', 'Furniture', 'Books', 'Electronics', 'Kitchen & Dining', 'Sports & Outdoors']; %>
+      <% categories.forEach(cat => { %>
+        <button type="submit" name="category" value="<%= cat %>" 
+          class="btn btn-outline-danger px-4 py-2 fs-5 me-1 mb-1 <%= category === cat ? 'active' : '' %>">
+          <%= cat %>
+        </button>
+      <% }) %>
     </div>
-  </section>
+  </form>
+
 
   <div class="container my-5">
     <div class="row g-4">
+      <% listings.forEach(listing => { %>
+        <div class="col-md-6 col-lg-4">
+          <div class="card h-100 shadow-sm">
+            <!-- for image Carousel -->
+            <div id="carousel-<%= listing.id %>" class="carousel slide" data-bs-interval="false">
+              <div class="carousel-inner">
+                <% (Array.isArray(listing.image) ? listing.image : [listing.image]).forEach((img, index) => { %>
+                  <div class="carousel-item <%= index === 0 ? 'active' : '' %>">
+                    <img src="/imgs/<%= img %>" class="d-block w-100" alt="<%= listing.title %> image <%= index + 1 %>">
+                  </div>
+                <% }) %>
+              </div>
+              <% if ((Array.isArray(listing.image) ? listing.image.length : 1) > 1) { %>
+                <button class="carousel-control-prev" type="button" data-bs-target="#carousel-<%= listing.id %>" data-bs-slide="prev">
+                  <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                  <span class="visually-hidden">Previous</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#carousel-<%= listing.id %>" data-bs-slide="next">
+                  <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                  <span class="visually-hidden">Next</span>
+                </button>
+              <% } %>
+            </div>
 
-      <div class="col-md-6 col-lg-4">
-        <div class="card h-100 shadow-sm">
-          <div id="carousel1" class="carousel slide" data-bs-ride="carousel">
-            <div class="carousel-inner">
-              <div class="carousel-item active">
-                <img src="imgs/minifridge1.jpeg" class="d-block w-100" alt="">
-              </div>
-              <div class="carousel-item">
-                <img src="imgs/minifridge2.jpeg" class="d-block w-100" alt="">
-              </div>
+            <!-- Listings cards -->
+            <div class="card-body">
+              <h5 class="card-title text-danger fw-bold"><%= listing.title %></h5>
+              <p class="card-text">
+                <strong>Price:</strong> $<%= listing.price %><br>
+                <strong>Location:</strong> <%= listing.location %>
+              </p>
+              <a href="/listing/<%= listing.id %>" class="btn btn-danger w-100">View Details</a>
             </div>
-            <button class="carousel-control-prev" type="button" data-bs-target="#carousel1" data-bs-slide="prev">
-              <span class="carousel-control-prev-icon"></span>
-              <span class="visually-hidden">Previous</span>
-            </button>
-            <button class="carousel-control-next" type="button" data-bs-target="#carousel1" data-bs-slide="next">
-              <span class="carousel-control-next-icon"></span>
-              <span class="visually-hidden">Next</span>
-            </button>
-          </div>
-  
-          <div class="card-body">
-            <h5 class="card-title">Mini Fridge</h5>
-            <p class="card-text">
-              <strong>Price: $35</strong><br>
-              Location: Pullman
-            </p>
-            <a href="listing-details.html" class="btn btn-danger w-100">View Details</a>
           </div>
         </div>
-      </div>
-  
+      <% }) %>
+    </div>
+  </div>
 
-      <div class="col-md-6 col-lg-4">
-        <div class="card h-100 shadow-sm">
-          <div id="carousel2" class="carousel slide" data-bs-ride="carousel">
-            <div class="carousel-inner">
-              <div class="carousel-item active">
-                <img src="imgs/couch1.jpeg" class="d-block w-100" alt="">
-              </div>
-              <div class="carousel-item">
-                <img src="imgs/couch2.jpeg" class="d-block w-100" alt="">
-              </div>
-            </div>
-            <button class="carousel-control-prev" type="button" data-bs-target="#carousel2" data-bs-slide="prev">
-              <span class="carousel-control-prev-icon"></span>
-              <span class="visually-hidden">Previous</span>
-            </button>
-            <button class="carousel-control-next" type="button" data-bs-target="#carousel2" data-bs-slide="next">
-              <span class="carousel-control-next-icon"></span>
-              <span class="visually-hidden">Next</span>
-            </button>
-          </div>
-          <div class="card-body">
-            <h5 class="card-title">Red Couch</h5>
-            <p class="card-text">
-              <strong>Price: $45</strong><br>
-              Location: Moscow
-            </p>
-            <a href="#" class="btn btn-danger w-100">View Details</a>
-          </div>
-        </div>
-      </div>
-
-      <div class="col-md-6 col-lg-4">
-        <div class="card h-100 shadow-sm">
-          <div id="carousel3" class="carousel slide" data-bs-ride="carousel">
-            <div class="carousel-inner">
-              <div class="carousel-item active">
-                <img src="imgs/textbook.jpg" class="d-block w-100" alt="">
-              </div>
-              <div class="carousel-item">
-                <img src="" class="d-block w-100" alt="">
-              </div>
-            </div>
-            <button class="carousel-control-prev" type="button" data-bs-target="#carousel3" data-bs-slide="prev">
-              <span class="carousel-control-prev-icon"></span>
-              <span class="visually-hidden">Previous</span>
-            </button>
-            <button class="carousel-control-next" type="button" data-bs-target="#carousel3" data-bs-slide="next">
-              <span class="carousel-control-next-icon"></span>
-              <span class="visually-hidden">Next</span>
-            </button>
-          </div>
+  <!-- Footer -->
+  <footer class="coug-crimson text-white text-center p-3 mt-5">
+    &copy; 2025 CougList - Washington State University
+  </footer>
   
-          <div class="card-body">
-            <h5 class="card-title">Math Textbook</h5>
-            <p class="card-text">
-              <strong>Price: $28</strong><br>
-              Location: Pullman
-            </p>
-            <a href="#" class="btn btn-danger w-100">View Details</a>
-          </div>
-        </div>
-      </div>
-  
-
-      <div class="col-md-6 col-lg-4">
-        <div class="card h-100 shadow-sm">
-          <div id="carousel4" class="carousel slide" data-bs-ride="carousel">
-            <div class="carousel-inner">
-              <div class="carousel-item active">
-                <img src="imgs/ipad.jpg" class="d-block w-100" alt="">
-              </div>
-              <div class="carousel-item">
-                <img src="" class="d-block w-100" alt="">
-              </div>
-            </div>
-            <button class="carousel-control-prev" type="button" data-bs-target="#carousel4" data-bs-slide="prev">
-              <span class="carousel-control-prev-icon"></span>
-              <span class="visually-hidden">Previous</span>
-            </button>
-            <button class="carousel-control-next" type="button" data-bs-target="#carousel4" data-bs-slide="next">
-              <span class="carousel-control-next-icon"></span>
-              <span class="visually-hidden">Next</span>
-            </button>
-          </div>
-  
-          <div class="card-body">
-            <h5 class="card-title">iPad Pro M2 11"</h5>
-            <p class="card-text">
-              <strong>Price: $325</strong><br>
-              Location: Pullman
-            </p>
-            <a href="#" class="btn btn-danger w-100">View Details</a>
-          </div>
-        </div>
-      </div>
-  
-      <div class="col-md-6 col-lg-4">
-        <div class="card h-100 shadow-sm">
-          <div id="carousel5" class="carousel slide" data-bs-ride="carousel">
-            <div class="carousel-inner">
-              <div class="carousel-item active">
-                <img src="imgs/toasterOven1.jpeg" class="d-block w-100" alt="">
-              </div>
-              <div class="carousel-item">
-                <img src="imgs/toasterOven2.jpeg" class="d-block w-100" alt="">
-              </div>
-            </div>
-            <button class="carousel-control-prev" type="button" data-bs-target="#carousel5" data-bs-slide="prev">
-              <span class="carousel-control-prev-icon"></span>
-              <span class="visually-hidden">Previous</span>
-            </button>
-            <button class="carousel-control-next" type="button" data-bs-target="#carousel5" data-bs-slide="next">
-              <span class="carousel-control-next-icon"></span>
-              <span class="visually-hidden">Next</span>
-            </button>
-          </div>
-  
-          <div class="card-body">
-            <h5 class="card-title">Toaster Oven</h5>
-            <p class="card-text">
-              <strong>Price: $42</strong><br>
-              Location: Pullman
-            </p>
-            <a href="#" class="btn btn-danger w-100">View Details</a>
-          </div>
-        </div>
-      </div>
-
-      <div class="col-md-6 col-lg-4">
-        <div class="card h-100 shadow-sm">
-          <div id="carousel6" class="carousel slide" data-bs-ride="carousel">
-            <div class="carousel-inner">
-              <div class="carousel-item active">
-                <img src="imgs/deskLamp1.jpeg" class="d-block w-100" alt="">
-              </div>
-              <div class="carousel-item">
-                <img src="imgs/deskLamp1.jpeg" class="d-block w-100" alt="">
-              </div>
-            </div>
-            <button class="carousel-control-prev" type="button" data-bs-target="#carousel6" data-bs-slide="prev">
-              <span class="carousel-control-prev-icon"></span>
-              <span class="visually-hidden">Previous</span>
-            </button>
-            <button class="carousel-control-next" type="button" data-bs-target="#carousel6" data-bs-slide="next">
-              <span class="carousel-control-next-icon"></span>
-              <span class="visually-hidden">Next</span>
-            </button>
-          </div>
-  
-          <div class="card-body">
-            <h5 class="card-title">Desk lamp</h5>
-            <p class="card-text">
-              <strong>Price: $25</strong><br>
-              Location: Pullman
-            </p>
-            <a href="#" class="btn btn-danger w-100">View Details</a>
-          </div>
-        </div>
-      </div>
-      <footer class="coug-crimson text-white text-center p-3 fixed-bottom">
-        &copy; 2025 CougList - Washington State University
-      </footer>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

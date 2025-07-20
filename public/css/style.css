@@ -103,9 +103,8 @@ body {
   border-color: #9d2235;
 }
 
-/* Merged Styles */
-
 .dash-titles {
+
   color: #9d2235;
   font-weight: bold;
 }
@@ -134,3 +133,53 @@ body {
   display: block;
   margin: auto;
 }
+
+.chat-box {
+  height: 400px;
+  overflow-y: auto;
+ box-shadow: 0 4px 12px rgba(0, 0, 0, 0.8);
+}
+
+.list-group-item{
+  border-radius: 10px;
+}
+.list-group-item:hover {
+  background-color: #f8d7da;
+}
+
+.chat-area{
+  height: 80vh;
+  overflow: hidden;
+
+}
+
+.message-area{
+  overflow-y: auto;
+  flex-grow: 1;
+  padding: 19px 15px;
+  display:flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.message-bubble{
+  padding: 10px 15px;
+  border-radius: 12px;
+  max-width: 70%;
+  font-size: 12px;
+  line-height: 1.4;
+  word-wrap: break-word;
+}
+
+.received{
+  background-color: #e4e4e4;
+  color: black;
+  align-self: flex-start;
+}
+
+.sent{
+  background-color:  #d1364d;
+  color: white;
+  align-self: flex-end;
+}
+
