@@ -16,7 +16,7 @@ router.post('/register', async (req, res) => {
         console.error(err.message);
         return res.status(400).send('User already exists or invalid input');
         }
-        res.redirect('/login.html');
+        res.redirect('/login');
     }
     );
 });
@@ -42,7 +42,7 @@ router.post('/login', (req, res) => {
 
 router.get('/logout', (req, res) => {
   req.session.destroy(() => {
-    res.redirect('/login.html');
+    res.redirect('/login');
   });
 });
 
