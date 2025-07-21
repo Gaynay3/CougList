@@ -3,10 +3,27 @@ body {
   font-family: 'Segoe UI', sans-serif;
 }
 
+
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+}
+
 .coug-crimson {
   background-color: #9d2235;
   color: white;
   border: none;
+  position: relative;
+  z-index: 10; 
+}
+
+header nav a {
+  color: white !important;
+  text-decoration: none;
+  font-weight: bold;
 }
 
 .add-listing {
@@ -23,18 +40,17 @@ body {
 }
 
 .Qoute {
-  padding: 30px 60px;
   color: white;
-  font-size: 30px;
-  letter-spacing: 2px;
-  word-spacing: 10px;
-  font-family: 'Montserrat', sans-serif;
+  font-size: 2rem;
+  font-weight: bold;
+  text-shadow: 1px 1px 5px rgba(0,0,0,0.7);
+  margin-bottom: 20px;
 }
 
 .landing-btn {
   display: inline-block;
-  padding: 30px 60px;
-  margin: 30px;
+  padding: 10px 20px;
+  margin: 10px;
   background-color: #580808;
   color: white;
   text-decoration: none;
@@ -44,19 +60,33 @@ body {
   position: relative;
 }
 
-.btn:hover {
+.landing-btn:hover {
   background-color: #770b1a;
 }
 
 .hero-container {
-  position: relative;
+  background-image: url('/imgs/campus.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   text-align: center;
+  padding: 2rem;
+  position: relative;
+  z-index: 1;
 }
 
-.hero-img {
-  width: 100%;
+.hero-logo {
+  width: 400px;
   height: auto;
   display: block;
+  margin: 0 auto;
+  filter: drop-shadow(0 0 20px white);
+  
 }
 
 .hero-buttons {
@@ -103,8 +133,6 @@ body {
   border-color: #9d2235;
 }
 
-/* Merged Styles */
-
 .dash-titles {
   color: #9d2235;
   font-weight: bold;
@@ -133,4 +161,10 @@ body {
   border-radius: 10px;
   display: block;
   margin: auto;
+}
+
+footer {
+  
+  width: 100%;
+  margin-top: auto;
 }

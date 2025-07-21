@@ -35,10 +35,35 @@ app.get('/browse', (req, res) => {
   res.render('browse', { user: req.session.userId });
 });
 
+app.get('/about-us', (req, res) => {
+  res.render('about-us', { user: req.session.userId });
+});
+
 // Dashboard (Protected Route)
 app.get('/dashboard', requireLogin, (req, res) => {
-  res.sendFile(path.join(__dirname, 'public', 'dashboard.html'));
+  res.render('dashboard', { user: req.session.userId });
 });
+
+app.get('/listing', (req, res) => {
+  res.render('listing', { user: req.session.userId });
+});
+
+app.get('/listing-details', (req, res) => {
+  res.render('listing-details', { user: req.session.userId });
+});
+
+app.get('/product-listing', (req, res) => {
+  res.render('product-listing', { user: req.session.userId });
+});
+
+app.get('/login', (req, res) => {
+  res.render('login', { user: req.session.userId });
+});
+
+app.get('/register', (req, res) => {
+  res.render('register', { user: req.session.userId });
+});
+
 
 // Start Server
 app.listen(PORT, () => {
