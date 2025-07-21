@@ -1,31 +1,44 @@
+/* General Page Styling */
 body {
   background-color: #f8f8f8;
   font-family: 'Segoe UI', sans-serif;
 }
 
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+main {
+  flex: 1;
+}
+
+/* Header */
 .coug-crimson {
   background-color: #9d2235;
   color: white;
   border: none;
+  position: relative;
+  z-index: 10;
 }
 
-.add-listing {
-  margin-top: 20px;
+header nav a {
+  color: white !important;
+  text-decoration: none;
+  font-weight: bold;
 }
 
-.listing {
-  border-bottom: 1px solid #ddd;
-  padding: 10px 0;
-}
-
-.listing h3 {
-  margin: 0;
-}
-
+/* Quote and Landing Button */
 .Qoute {
-  padding: 30px 60px;
   color: white;
-  font-size: 30px;
+  font-size: 2rem;
+  font-weight: bold;
+  text-shadow: 1px 1px 5px rgba(0,0,0,0.7);
+  margin-bottom: 20px;
+  padding: 30px 60px;
   letter-spacing: 2px;
   word-spacing: 10px;
   font-family: 'Montserrat', sans-serif;
@@ -44,19 +57,40 @@ body {
   position: relative;
 }
 
+.landing-btn:hover,
 .btn:hover {
   background-color: #770b1a;
 }
 
+/* Hero Section */
 .hero-container {
-  position: relative;
+  background-image: url('/imgs/campus.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   text-align: center;
+  padding: 2rem;
+  position: relative;
+  z-index: 1;
 }
 
 .hero-img {
   width: 100%;
   height: auto;
   display: block;
+}
+
+.hero-logo {
+  width: 200px;
+  height: auto;
+  display: block;
+  margin: 0 auto;
+  filter: drop-shadow(0 0 20px white);
 }
 
 .hero-buttons {
@@ -67,11 +101,7 @@ body {
   z-index: 2;
 }
 
-.login-container {
-  border: #580808;
-  border-radius: 0%;
-}
-
+/* Cards and Highlights */
 .card-img-top {
   object-fit: cover;
   height: 200px;
@@ -89,26 +119,23 @@ body {
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
 }
 
+/* Buttons */
 .btn-pill {
   border-radius: 20px;
 }
 
-.carousel-item img {
-  height: 200px;
-  object-fit: cover;
-}
-
-.btn-danger, btn-outline-danger:hover {
+.btn-danger, .btn-outline-danger:hover {
   background-color: #9d2235;
   border-color: #9d2235;
 }
 
+/* Dashboard Titles */
 .dash-titles {
-
   color: #9d2235;
   font-weight: bold;
 }
 
+/* Thumbnails */
 .thumbnail {
   height: 100px;
   width: 100px;
@@ -134,17 +161,11 @@ body {
   margin: auto;
 }
 
+/* Chat */
 .chat-box {
   height: 400px;
   overflow-y: auto;
- box-shadow: 0 4px 12px rgba(0, 0, 0, 0.8);
-}
-
-.list-group-item{
-  border-radius: 10px;
-}
-.list-group-item:hover {
-  background-color: #f8d7da;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.8);
 }
 
 .chat-area {
@@ -163,8 +184,7 @@ body {
   max-height: 100%;
 }
 
-
-.message-bubble{
+.message-bubble {
   padding: 10px 15px;
   border-radius: 12px;
   max-width: 70%;
@@ -173,15 +193,36 @@ body {
   word-wrap: break-word;
 }
 
-.received{
+.received {
   background-color: #e4e4e4;
   color: black;
   align-self: flex-start;
 }
 
-.sent{
-  background-color:  #d1364d;
+.sent {
+  background-color: #d1364d;
   color: white;
   align-self: flex-end;
 }
 
+/* Lists */
+.list-group-item {
+  border-radius: 10px;
+}
+
+.list-group-item:hover {
+  background-color: #f8d7da;
+}
+
+/* Carousel */
+.carousel-item img {
+  height: 200px;
+  object-fit: cover;
+}
+
+/* Footer */
+footer {
+  width: 100%;
+  margin-top: auto;
+  position: relative;
+}
