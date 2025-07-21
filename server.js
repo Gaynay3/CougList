@@ -3,9 +3,7 @@ const path = require('path');
 const logger = require('morgan');
 const session = require('express-session');
 const cookieParser = require('cookie-parser');
-const bodyParser = require('body-parser');
 const createError = require('http-errors');
-const { Op } = require('sequelize');
 
 const sequelize = require('./db');
 const { Message, Conversation, Listing } = require('./models'); 
@@ -17,9 +15,9 @@ const conversationsRouter = require('./routes/api/conversations');
 const apiMessagesRouter = require('./routes/api/messages');
 const inboxRouter = require('./routes/api/inbox');
 const browseRouter = require('./routes/api/browse');
-const listingRoutes = require('./routes/api/listing-details');
-const listingsDetailRouter = require('./routes/api/listing-details');
+const listingDetailsRouter = require('./routes/api/listing-details');
 const dashboardRouter = require('./routes/api/dashboard');
+const listingsRouter = require('./routes/api/listings');
 
 const app = express();
 const PORT = 3000;
@@ -33,27 +31,28 @@ app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(session({
   secret: 'couglist-secret',
   resave: false,
   saveUninitialized: false,
-  cookie: { secure: false }
+  cookie: { secure: false } // Change to true behind HTTPS
 }));
 
+// Routes
 // Routes
 app.use(authRoutes);
 app.use('/conversations', conversationsRouter);
 app.use('/api/messages', apiMessagesRouter);
 app.use('/inbox', inboxRouter);
 app.use('/browse', browseRouter);
-app.use('/listing', listingRoutes);
-app.use('/listing-details', listingsDetailRouter);
+app.use('/listing', listingDetailsRouter);  // ✅ Fix this line
 app.use('/dashboard', dashboardRouter);
+app.use('/listings', listingsRouter);
 
-// Page Routes (rendered views)
+
+// Rendered pages
 app.get('/', (req, res) => {
   res.render('landing-page', { user: req.session.userId });
 });

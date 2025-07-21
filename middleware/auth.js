@@ -5,3 +5,4 @@ module.exports = function requireLogin(req, res, next) {
     res.redirect('/login.html');  // redirect if not logged in
   }
 };
+

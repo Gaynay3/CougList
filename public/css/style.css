@@ -147,20 +147,22 @@ body {
   background-color: #f8d7da;
 }
 
-.chat-area{
+.chat-area {
   height: 80vh;
+  display: flex;
   overflow: hidden;
-
 }
 
-.message-area{
+.message-area {
   overflow-y: auto;
   flex-grow: 1;
   padding: 19px 15px;
-  display:flex;
+  display: flex;
   flex-direction: column;
   gap: 10px;
+  max-height: 100%;
 }
+
 
 .message-bubble{
   padding: 10px 15px;

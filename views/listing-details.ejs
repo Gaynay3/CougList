@@ -23,15 +23,20 @@
 <div class="container my-5">
   <div class="row g-5">
     <div class="col-lg-7 d-flex">
-      <% if (Array.isArray(listing.image)) { %>
-        <div class="me-3 d-flex flex-column align-items-center">
-          <% listing.image.forEach((img, index) => { %>
-            <img src="/imgs/<%= img %>" class="thumbnail <% if (index === 0) { %>active<% } %>" onclick="changeImage(this)">
-          <% }) %>
-        </div>
-        <div class="flex-grow-1">
-          <img id="mainImage" src="/imgs/<%= listing.image[0] %>" class="main-img w-100" alt="<%= listing.title %>">
-        </div>
+      <% if (listing.image) { %>
+        <% if (Array.isArray(listing.image)) { %>
+          <div class="me-3 d-flex flex-column align-items-center">
+            <% listing.image.forEach((img, index) => { %>
+              <img src="/imgs/<%= img %>" class="thumbnail <% if (index === 0) { %>active<% } %>" onclick="changeImage(this)">
+            <% }) %>
+          </div>
+          <div class="flex-grow-1">
+            <img id="mainImage" src="/imgs/<%= listing.image[0] %>" class="main-img w-100" alt="<%= listing.title %>">
+          </div>
+        <% } else { %>
+          <!-- listing.image is a single string -->
+          <img id="mainImage" src="/imgs/<%= listing.image %>" class="main-img w-100" alt="<%= listing.title %>">
+        <% } %>
       <% } else { %>
         <img src="/imgs/default.jpg" class="main-img w-100" alt="No image available">
       <% } %>

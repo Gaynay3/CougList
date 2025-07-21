@@ -28,3 +28,37 @@ function addListing() {
 
 
 
+document.addEventListener('DOMContentLoaded', () => {
+  const form = document.getElementById('listingForm');
+  const successMessage = document.getElementById('successMessage');
+
+  if (form) {
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const formData = new FormData(form);
+
+      try {
+        const res = await fetch('/listings', {
+          method: 'POST',
+          body: formData
+        });
+
+        if (res.ok) {
+          successMessage.classList.remove('d-none');
+          form.reset();
+
+          // Optional: hide message after 4 seconds
+          setTimeout(() => {
+            successMessage.classList.add('d-none');
+          }, 4000);
+        } else {
+          alert('❌ Failed to post listing.');
+        }
+      } catch (err) {
+        console.error('Error:', err);
+        alert('❌ An error occurred while posting.');
+      }
+    });
+  }
+});
