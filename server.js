@@ -37,17 +37,16 @@ app.use(session({
   secret: 'couglist-secret',
   resave: false,
   saveUninitialized: false,
-  cookie: { secure: false } // Change to true behind HTTPS
+  cookie: { secure: false } 
 }));
 
-// Routes
 // Routes
 app.use(authRoutes);
 app.use('/conversations', conversationsRouter);
 app.use('/api/messages', apiMessagesRouter);
 app.use('/inbox', inboxRouter);
 app.use('/browse', browseRouter);
-app.use('/listing', listingDetailsRouter);  // ✅ Fix this line
+app.use('/listing', listingDetailsRouter); 
 app.use('/dashboard', dashboardRouter);
 app.use('/listings', listingsRouter);
 
