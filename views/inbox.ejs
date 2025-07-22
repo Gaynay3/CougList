@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>CougList - Inbox</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <header class="coug-crimson text-white d-flex justify-content-between align-items-center p-3 flex-wrap">
+  <h1 class="m-0">
+    <a href="/" style="text-decoration: none; color: inherit">CougList</a>
+  </h1>
+  <nav>
+    <a href="/" class="mx-3 fw-bold text-white">Home</a>
+    <a href="/about-us.html" class="mx-3 fw-bold text-white">About</a>
+    <a href="/dashboard" class="mx-3 fw-bold text-white">Dashboard</a>
+  </nav>
+</header>
+
+<div class="container my-4">
+  <div class="row chat-area">
+
+    <!-- Sidebar: List of conversations -->
+    <div class="col-md-4 border-end overflow-auto">
+      <h4 class="dash-titles mt-3">Inbox</h4>
+      <% conversations.forEach(conv => { %>
+        <a href="/inbox/<%= conv.id %>" class="list-group-item list-group-item-action my-2 shadow-sm p-3 <%= selectedConversation && selectedConversation.id === conv.id ? 'active' : '' %>">
+          <% 
+            const u1 = conv.user1;
+            const u2 = conv.user2;
+            const otherUser = u1 && u2 ? (u1.id === currentUserId ? u2.username : u1.username) : 'Unknown User';
+          %>
+          <div><strong><%= otherUser %></strong></div>
+          <small class="text-muted d-block"><%= conv.Listing ? 'Item: ' + conv.Listing.title : '' %></small>
+          <small class="text-muted"><%= conv.Messages.length ? conv.Messages[conv.Messages.length - 1].content : 'No messages yet' %></small>
+        </a>
+      <% }); %>
+    </div>
+
+    <!-- Main Chat Area -->
+    <div class="col-md-8 d-flex flex-column">
+      <% if (selectedConversation) { 
+          const u1 = selectedConversation.user1;
+          const u2 = selectedConversation.user2;
+          const chatWith = u1 && u2 ? (u1.id === currentUserId ? u2.username : u1.username) : 'Unknown User';
+      %>
+        <div class="btn-danger text-white p-2 fw-bold">
+          Chat with <%= chatWith %>
+        </div>
+
+        <!-- messages -->
+        <div class="message-area">
+          <% selectedConversation.Messages.forEach(msg => { 
+              const isCurrentUser = msg.senderId === currentUserId;
+          %>
+            <div class="message-bubble <%= isCurrentUser ? 'sent' : 'received' %>">
+              <%= msg.content %>
+            </div>
+          <% }) %>
+        </div>
+
+        <!-- message form -->
+        <div class="p-2 border-top">
+          <form action="/inbox/<%= selectedConversation.id %>/message" method="POST" class="d-flex">
+            <input type="text" name="content" class="form-control me-2" placeholder="Type your message..." required />
+            <button type="submit" class="btn btn-danger">Send</button>
+          </form>
+        </div>
+      <% } else { %>
+        <div class="text-center text-muted m-auto">Select a conversation to start chatting</div>
+      <% } %>
+    </div>
+
+  </div>
+</div>
+
+</body>
+</html>
